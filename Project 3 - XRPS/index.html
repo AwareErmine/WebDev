@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>XRPS</title>
+        <link rel="stylesheet" href="index.css">
+        <script src="index.js"></script>
+    </head>
+    <body>
+        <div class="main">
+            <div id="computerWeaponsContainer" class="container">
+                <h1>Computer weapons</h1>
+            </div>
+            <div id="scoreContainer" class="container">
+                <h1 id="winner">Select an item to begin!</h1>
+                <div>
+                    <div id="computerChoice" class="choice">?</div>
+                    <h1>vs</h1>
+                    <div id="userChoice" class="choice">?</div>
+                </div>
+                <button onclick="battle()" id="battle" disabled>BATTLE!</button>
+            </div>
+            <div id="userWeaponsContainer" class="container">
+                <h1>Your weapons</h1>
+            </div>
+            <div id="log" class="container">
+                <h1>Log</h1>
+                <div id="log-cards"></div>
+            </div>
+        </div>
+        
+    </body>
+</html>
