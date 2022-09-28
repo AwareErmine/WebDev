@@ -2,6 +2,7 @@ body {
   background-color: rgb(17, 1, 15);
   color: lavender;
   font-family: sans-serif;
+  cursor: man;
   /* overflow-x: hidden; */
 }
 
@@ -51,8 +52,21 @@ h1 {
   border-radius: 5px;
   padding: 1rem;
   margin-right: 10px;
-  min-width: 10rem;
-  height: 10rem;
+  min-width: 11rem;
+  min-height: 10rem;
+  gap: 5px
+}
+.log-card p:first-of-type {
+    text-align: right;
+}
+.log-card * {
+    margin: 0;
+    padding: 0;
+}
+.log-card-breakdown {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
 }
 
 .user-weapon,
