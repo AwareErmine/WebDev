@@ -9,6 +9,12 @@ h1 {
   font-size: clamp(1rem, 1rem + 2vw, 2rem);
 }
 
+code {
+  background-color: rgb(64, 18, 58);
+  padding: 5px;
+  border-radius: 3px;
+}
+
 .main {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -18,13 +24,13 @@ h1 {
 }
 
 .log-card {
-  border: 2px solid rgba(230, 230, 250, 0.604);
   border-radius: 5px;
   padding: 1rem;
   margin-right: 10px;
-  min-width: 11rem;
+  min-width: 15rem;
   min-height: 10rem;
   gap: 5px;
+  background-color: rgb(36, 32, 41);;
 }
 .log-card p:first-of-type {
   text-align: right;
@@ -42,12 +48,16 @@ h1 {
 .user-weapon,
 .computer-weapon,
 .choice {
-  border: 2px solid rgba(230, 230, 250, 0.604);
+  /* border: 2px solid rgba(230, 230, 250, 0.604); */
+  background-color: #1f101f;
+  /* -webkit-box-shadow: 0px 0px 3px 3px rgba(255, 60, 0, 0.613), 0px 0px 6px 6px rgba(255, 60, 0, 0.418), 0px 0px 10px 10px rgba(255, 60, 0, 0.418);
+  -moz-box-shadow: 0px 0px 3px 3px rgba(255, 60, 0, 0.613), 0px 0px 6px 6px rgba(255, 60, 0, 0.418), 0px 0px 10px 10px rgba(255, 60, 0, 0.418);
+  box-shadow: 0px 0px 3px 3px rgba(255, 60, 0, 0.613), 0px 0px 6px 6px rgba(255, 60, 0, 0.418), 0px 0px 10px 10px rgba(255, 60, 0, 0.418); */
   border-radius: 5px;
   padding: 1rem;
   font-size: 65px;
   width: 9rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 2.1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,10 +70,10 @@ h1 {
 }
 .user-weapon:hover:not(.chosen-one) {
   cursor: pointer;
-  background-color: rgba(230, 230, 250, 0.224);
+  background-color: rgba(160, 27, 0, 0.76);
 }
 .user-weapon:active {
-  background-color: rgba(230, 230, 250, 0.1);
+  background-color: rgba(160, 27, 0, 0.5);
 }
 .user-weapon span,
 .computer-weapon span {
@@ -73,7 +83,7 @@ h1 {
 }
 
 .chosen-one {
-  background-color: rgba(230, 230, 250, 0.604);
+  background-color: rgba(160, 27, 0, 0.5);
 }
 
 .container {
@@ -92,6 +102,7 @@ h1 {
 
 #battle:hover:not(:disabled),
 .info-btn:hover {
+  cursor: pointer;
   background-color: rgba(230, 230, 250, 0.9);
 }
 #battle:active:not(:disabled) {
@@ -148,14 +159,19 @@ h1 {
 #log-cards {
   display: flex;
   flex-direction: row;
-  border: 2px solid rgba(230, 230, 250, 0.361);
-  border-radius: 3px;
+  /* border: 2px solid rgba(230, 230, 250, 0.361); */
+  background-color: rgb(19, 14, 25);
+  border-radius: 5px;
   padding: 1rem;
   min-height: 12rem;
   overflow-x: scroll;
   overflow-y: hidden;
   width: calc(100vw - 7rem);
   white-space: nowrap;
+}
+#log-cards .log-card:first-of-type {
+  background-color: rgb(13, 1, 25);
+  border-color: rgb(27, 7, 48);
 }
 
 .log-card-column {
@@ -190,7 +206,19 @@ h1 {
 }
 
 .info-btn-box {
+  padding: 2rem;
   display: flex;
   justify-content: right;
-  margin: 2rem 2rem 0 0;
+  align-items: center;
+  flex-direction: row;
+  margin-bottom: 0;
+}
+.info-btn-box h1 {
+  align-self: center;
+  flex: 1;
+  margin: 0;
+}
+.info-btn-box button {
+  flex: 0;
+  height: 100%;
 }

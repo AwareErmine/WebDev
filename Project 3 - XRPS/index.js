@@ -108,10 +108,7 @@ function battle() {
     .getElementById(`computer${computerChoice}weaponbox`)
     .classList.add("chosen-one");
 
-  // Make winner changes
   const winner = getWinner(computerChoice, game.user.selected.type);
-  const winnerHeading = document.getElementById("winner");
-  winnerHeading.innerHTML = `${winner} wins!`;
 
   setPlayerChoice("computer", computerChoice);
   setPlayerChoice("user", game.user.selected.type); // this "finalizes" the selection
@@ -125,6 +122,10 @@ function battle() {
     }
   }
 
+  // Update heading to say winner
+  const winnerHeading = document.getElementById("winner");
+  winnerHeading.innerHTML = `${winner} wins!`;
+
   // Battle button --> next round
   const battleButton = document.getElementById("battle");
   battleButton.innerHTML = "Next Round";
@@ -134,21 +135,20 @@ function battle() {
 function addToLog(computerChoice, winner) {
   roundCount++;
   const log = document.getElementById("log-cards");
+  const loser = winner == "user" ? "computer" : "user";
   log.prepend(
     htmlToElement(`
             <div class="log-card">
                 <p>${roundCount}</p>
-                <center><h2>${winner} won</2></center>
+                <center><h2>${winner} won +${icons[game[loser].selected.type]}</h2></center>
                 <div class="log-card-breakdown">
                     <div class="log-card-column">
                         <h1>${icons[computerChoice]}</h1>
-                        <h3>${winner == "computer" ? "+" : "-"}1</h3>
                         <h4>${"| ".repeat(game.computer.selected.repeats)}</h4>
                     </div>
                     <h1>vs</h1>
                     <div class="log-card-column">
                         <h1>${icons[game.user.selected.type]}</h1>
-                        <h3>${winner == "user" ? "+" : "-"}1</h3>
                         <h4>${"| ".repeat(game.user.selected.repeats)}</h4>
                     </div>
                 </div>
@@ -178,7 +178,10 @@ function onWeaponClick(evt, type) {
   battleButton.disabled = false;
 }
 
-function nextRound(computerChoice, winner) {
+function nextRound() {
+  const computerChoice = game.computer.selected.type;
+  const winner = getWinner(computerChoice, game.user.selected.type);
+
   addToLog(computerChoice, winner);
   game.user.selected.elem.classList.remove("chosen-one");
   document
@@ -271,6 +274,9 @@ function onKeyPress(evt) {
     if (battleButton.disabled) return;
     else if (battleButton.innerHTML == "BATTLE!") {
       battle();
+      return;
+    } else if (battleButton.innerHTML == "Next Round") {
+      nextRound();
       return;
     }
   }

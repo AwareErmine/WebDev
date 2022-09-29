@@ -8,7 +8,7 @@
   </head>
   <body>
     <div
-      class="modal-container"
+      class="modal-container hidden"
       id="info-modal"
       onClick="event.currentTarget.classList.toggle('hidden')"
     >
@@ -16,23 +16,22 @@
         <h1>X-treme Rock Paper Scissors</h1>
         <h3>Rules</h3>
         <p>
-          You have 5 of each weapon type: rock, paper, and scissors. Each of
-          these weapons may be used 3 times in a row.
+          You have 5 of each weapon type: rock, paper, and scissors. If you play a weapon more than <code>3</code> times in a row, that weapon breaks. (It'll break on the fourth use.) 
         </p>
-        <p></p>
         <h3>How To Play</h3>
         <p>
           Select the weapon on the "User" side that you want to play, and then
-          press <code>enter</code> or the <code>BATTLE!</code> button.
+          press your <code>enter</code> or the <code>BATTLE!</code> button.
         </p>
         <p>
-          The number of uses left of each weapon is indicated by
-          <code>R</code> or the remainder of each weapon type.
+          In the log, the number of times each weapon has been used in consecutive turns is indicated by tally marks. 
         </p>
+        <p>The log and values are updated as you go to the next round.</p>
       </div>
     </div>
 
     <div class="info-btn-box">
+      <h1>X-treme Rock Paper Scissors</h1>
       <button
         class="info-btn"
         onClick="document.getElementById('info-modal').classList.toggle('hidden')"
