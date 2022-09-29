@@ -6,20 +6,25 @@ const icons = {
 
 const game = {
   user: {
-    rocks: 15,
-    papers: 15,
-    scissors: 15,
+    rocks: 5,
+    papers: 5,
+    scissors: 5,
+    selected: {
+      elem: null,
+      type: null,
+      repeats: 0,
+    },
   },
   computer: {
-    rocks: 15,
-    papers: 15,
-    scissors: 15,
+    rocks: 5,
+    papers: 5,
+    scissors: 5,
+    selected: {
+      elem: null,
+      type: null,
+      repeats: 0,
+    },
   },
-};
-
-const selected = {
-  elem: null,
-  type: null,
 };
 
 const weaponToDeafeater = {
@@ -65,7 +70,7 @@ function getWinner(computerChoice, userChoice) {
 
 function getComputerChoice() {
   return weaponToDeafeater[
-    shuffle(Object.keys(game.user)).find(
+    shuffle(Object.keys(icons)).find(
       (weapon) =>
         game.computer[weaponToDeafeater[weapon]] > 0 && game.user[weapon] > 0
     )
@@ -73,52 +78,83 @@ function getComputerChoice() {
 }
 
 function getFormattedAmtForPlayer(player, choice) {
-    return "x" + ~~(game[player][choice]/3) + "R" + game[player][choice]%3;
+  return "x" + game[player][choice];
+}
+
+function setPlayerChoice(player, choice) {
+  if (choice == game[player].selected.type) {
+    if (game[player].selected.repeats == 3) {
+      // on the fourth repeat they lose a weapon
+      game[player].selected.repeats = 0;
+      game[player][choice] -= 1;
+      console.log(game[player]);
+    } else {
+      // they repeated the weapon
+      game[player].selected.repeats += 1;
+    }
+  } else {
+    // it's a new weapon! what originality!
+    game[player].selected.repeats = 1;
+    game[player].selected.type = choice;
+  }
 }
 
 function battle() {
-  // Computer choice, reset user choice, say who won, add to log
+  // Computer choice get + display
   const computerChoice = getComputerChoice();
   const computerChoiceBox = document.getElementById("computerChoice"); // the big one in the middle
   computerChoiceBox.innerHTML = icons[computerChoice];
-  document.getElementById(`computer${computerChoice}weaponbox`).classList.add("chosen-one");
+  document
+    .getElementById(`computer${computerChoice}weaponbox`)
+    .classList.add("chosen-one");
 
   // Make winner changes
-  const winner = getWinner(computerChoice, selected.type);
+  const winner = getWinner(computerChoice, game.user.selected.type);
   const winnerHeading = document.getElementById("winner");
   winnerHeading.innerHTML = `${winner} wins!`;
-  
-  // Battle button --> next round 
+
+  setPlayerChoice("computer", computerChoice);
+  setPlayerChoice("user", game.user.selected.type); // this "finalizes" the selection
+
+  if (winner != "nobody") {
+    const loser = winner == "computer" ? "user" : "computer";
+    // winner gets loser's weapon
+    if (game[loser][game[loser].selected.type] != 0) {
+      game[winner][game[loser].selected.type] += 1;
+      game[loser][game[loser].selected.type] -= 1;
+    }
+  }
+
+  // Battle button --> next round
   const battleButton = document.getElementById("battle");
   battleButton.innerHTML = "Next Round";
   battleButton.onclick = () => nextRound(computerChoice, winner);
 }
 
-function addToLog(computerChoice, winner, weaponAmt) {
-    const loser = winner == "computer" ? "user" : "computer";
-    const loserChoice = loser == "computer" ? computerChoice : selected.type;
-
-    roundCount++;
-    const log = document.getElementById("log-cards");
-    log.prepend(
-        htmlToElement(`
+function addToLog(computerChoice, winner) {
+  roundCount++;
+  const log = document.getElementById("log-cards");
+  log.prepend(
+    htmlToElement(`
             <div class="log-card">
                 <p>${roundCount}</p>
                 <center><h2>${winner} won</2></center>
                 <div class="log-card-breakdown">
-                    <center>
+                    <div class="log-card-column">
                         <h1>${icons[computerChoice]}</h1>
-                        <h3>${winner == "computer" ? "+" : "-"}${weaponAmt}</h3>
-                    </center>
+                        <h3>${winner == "computer" ? "+" : "-"}1</h3>
+                        <h4>${"| ".repeat(game.computer.selected.repeats)}</h4>
+                    </div>
                     <h1>vs</h1>
-                    <center>
-                        <h1>${icons[selected.type]}</h1>
-                        <h3>${winner == "user" ? "+" : "-"}${weaponAmt}</h3>
-                    </center>
+                    <div class="log-card-column">
+                        <h1>${icons[game.user.selected.type]}</h1>
+                        <h3>${winner == "user" ? "+" : "-"}1</h3>
+                        <h4>${"| ".repeat(game.user.selected.repeats)}</h4>
+                    </div>
                 </div>
             </div>
         `)
-    );
+  );
 }
 
 function onWeaponClick(evt, type) {
@@ -126,10 +162,11 @@ function onWeaponClick(evt, type) {
   const battleButton = document.getElementById("battle");
   if (battleButton.innerHTML == "Next Round") return;
 
-  if (selected.elem) selected.elem.classList.remove("chosen-one");
+  if (game.user.selected.elem)
+    game.user.selected.elem.classList.remove("chosen-one");
   evt.currentTarget.classList.add("chosen-one");
-  selected.elem = evt.currentTarget;
-  selected.type = type;
+  game.user.selected.elem = evt.currentTarget;
+  game.user.selected.type = type;
   const choiceBox = document.getElementById("userChoice");
   choiceBox.innerHTML = icons[type];
 
@@ -142,41 +179,47 @@ function onWeaponClick(evt, type) {
 }
 
 function nextRound(computerChoice, winner) {
-  // Update supplies
-  let weaponAmt = 0;
-  if (winner != "nobody") {
-    const loser = winner == "computer" ? "user" : "computer";
-    const loserChoice = loser == "computer" ? computerChoice : selected.type;
-
-    // used the weapon
-    game.computer[computerChoice] -= 1;
-    game.user[selected.type] -= 1;
-
-    // the winner gets the damaged weapon blah blah blah
-    weaponAmt = game[loser][loserChoice] % 3 || 3;
-    game[winner][loserChoice] += weaponAmt;
-    game[loser][loserChoice] -= weaponAmt;
-  }
-
-  addToLog(computerChoice, winner, weaponAmt);
-  selected.elem.classList.remove("chosen-one");
-  document.getElementById(`computer${computerChoice}weaponbox`).classList.remove("chosen-one");
+  addToLog(computerChoice, winner);
+  game.user.selected.elem.classList.remove("chosen-one");
+  document
+    .getElementById(`computer${computerChoice}weaponbox`)
+    .classList.remove("chosen-one");
 
   // Update the value for the weapon you used on the user side
-  const userChoiceCount = document.getElementById(`user${selected.type}`);
-  userChoiceCount.innerHTML = getFormattedAmtForPlayer('user', selected.type);
+  const userChoiceCount = document.getElementById(
+    `user${game.user.selected.type}`
+  );
+  userChoiceCount.innerHTML = getFormattedAmtForPlayer(
+    "user",
+    game.user.selected.type
+  );
 
   // Update the value for the weapon you used on the computer side
-  const computerUserChoiceCount = document.getElementById(`computer${selected.type}`);
-  computerUserChoiceCount.innerHTML = getFormattedAmtForPlayer('computer', selected.type);
+  const computerUserChoiceCount = document.getElementById(
+    `computer${game.user.selected.type}`
+  );
+  computerUserChoiceCount.innerHTML = getFormattedAmtForPlayer(
+    "computer",
+    game.user.selected.type
+  );
 
   // Update the value for the computer's choice on user side
-  const userComputerChoiceCount = document.getElementById(`user${computerChoice}`);
-  userComputerChoiceCount.innerHTML = getFormattedAmtForPlayer('user', computerChoice);
+  const userComputerChoiceCount = document.getElementById(
+    `user${computerChoice}`
+  );
+  userComputerChoiceCount.innerHTML = getFormattedAmtForPlayer(
+    "user",
+    computerChoice
+  );
 
   // Update the value for the weapon the computer used on the computer side
-  const computerChoiceCount = document.getElementById(`computer${computerChoice}`);
-  computerChoiceCount.innerHTML = getFormattedAmtForPlayer('computer', computerChoice);
+  const computerChoiceCount = document.getElementById(
+    `computer${computerChoice}`
+  );
+  computerChoiceCount.innerHTML = getFormattedAmtForPlayer(
+    "computer",
+    computerChoice
+  );
 
   // Update choices
   const choiceBox = document.getElementById("userChoice");
@@ -204,7 +247,9 @@ function renderWeapons(id, player) {
                 ? `onclick="onWeaponClick(event, '${key}')" class="user-weapon"`
                 : "class='computer-weapon'"
             } id="${player}${key}weaponbox">
-                ${icons[key]}<span id="${player}${key}">x${game[player][key] / 3}R${game[player][key] % 3}</span>
+                ${icons[key]}<span id="${player}${key}">x${
+      game[player][key]
+    }</span>
             <div>
         `);
     elem.appendChild(weapon);
@@ -220,15 +265,15 @@ function onPageLoad(evt) {
 }
 
 function onKeyPress(evt) {
-    if (evt.code === "Enter") {
-        // Next round would be a pain...
-        const battleButton = document.getElementById("battle");
-        if (battleButton.disabled) return;
-        else if (battleButton.innerHTML == "BATTLE!") { 
-            battle();
-            return;
-        };
+  if (evt.code === "Enter") {
+    // Next round would be a pain...
+    const battleButton = document.getElementById("battle");
+    if (battleButton.disabled) return;
+    else if (battleButton.innerHTML == "BATTLE!") {
+      battle();
+      return;
     }
+  }
 }
 
 document.addEventListener("DOMContentLoaded", onPageLoad);
