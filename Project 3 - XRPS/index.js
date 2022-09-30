@@ -65,18 +65,16 @@ function getWinner(computerChoice, userChoice) {
   else if (weaponToDeafeater[computerChoice] == userChoice) return "user";
   else if (weaponToDeafeater[userChoice] == computerChoice) return "computer";
 
-  console.log(computerChoice, userChoice);
   return "everybody✨"; // when would this happen
 }
 
 function getComputerChoice() {
-  // return weaponToDeafeater[
-  //   shuffle(Object.keys(icons)).find(
-  //     (weapon) =>
-  //       game.computer[weaponToDeafeater[weapon]] > 0 && game.user[weapon] > 0
-  //   )
-  // ];
-  return "scissors";
+  return weaponToDeafeater[
+    shuffle(Object.keys(icons)).find(
+      (weapon) =>
+        game.computer[weaponToDeafeater[weapon]] > 0 && game.user[weapon] > 0
+    )
+  ];
 }
 
 function getFormattedAmtForPlayer(player, choice) {
@@ -89,7 +87,6 @@ function setPlayerChoice(player, choice) {
       // on the fourth repeat they lose a weapon
       game[player].selected.repeats = 0;
       game[player][choice] -= 1;
-      console.log(game[player]);
     } else {
       // they repeated the weapon
       game[player].selected.repeats += 1;
@@ -104,7 +101,6 @@ function setPlayerChoice(player, choice) {
 function battle() {
   // Computer choice get + display
 
-  console.log(game);
   const computerChoice = getComputerChoice();
   const computerChoiceBox = document.getElementById("computerChoice"); // the big one in the middle
   computerChoiceBox.innerHTML = icons[computerChoice];
