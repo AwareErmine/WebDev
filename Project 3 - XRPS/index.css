@@ -44,6 +44,12 @@ code {
   justify-content: center;
   gap: 5px;
 }
+.log-card .broken-message {
+  margin-top: 5px;
+}
+.log-card .broken-message p {
+  text-align: center;
+}
 
 .user-weapon,
 .computer-weapon,

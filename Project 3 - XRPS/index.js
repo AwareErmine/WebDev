@@ -14,6 +14,7 @@ const game = {
       type: null, // the last one stored
       tempType: null, // use as temp storage
       repeats: 0,
+      broke: null, // null or the item that just broke
     },
   },
   computer: {
@@ -24,6 +25,7 @@ const game = {
       elem: null,
       type: null,
       repeats: 0,
+      broke: null,
     },
   },
 };
@@ -87,14 +89,17 @@ function setPlayerChoice(player, choice) {
       // on the fourth repeat they lose a weapon
       game[player].selected.repeats = 0;
       game[player][choice] -= 1;
+      game[player].selected.broke = choice;
     } else {
       // they repeated the weapon
       game[player].selected.repeats += 1;
+      game[player].selected.broke = null;
     }
   } else {
     // it's a new weapon! what originality!
     game[player].selected.repeats = 1;
     game[player].selected.type = choice;
+    game[player].selected.broke = null;
   }
 }
 
@@ -153,6 +158,18 @@ function addToLog(computerChoice, winner) {
                         <h1>${icons[game.user.selected.type]}</h1>
                         <h4>${"| ".repeat(game.user.selected.repeats)}</h4>
                     </div>
+                </div>
+                <div class="broken-message">
+                  <p>${
+                    game.user.selected.broke
+                      ? `One of the ${game.user.selected.broke} broke!`
+                      : ""
+                  }</p>
+                  <p>${
+                    game.computer.selected.broke
+                      ? `One of the ${game.user.computer.broke} broke!`
+                      : ""
+                  }</p>
                 </div>
             </div>
         `)
