@@ -11,7 +11,8 @@ const game = {
     scissors: 5,
     selected: {
       elem: null,
-      type: null,
+      type: null, // the last one stored
+      tempType: null, // use as temp storage
       repeats: 0,
     },
   },
@@ -69,12 +70,13 @@ function getWinner(computerChoice, userChoice) {
 }
 
 function getComputerChoice() {
-  return weaponToDeafeater[
-    shuffle(Object.keys(icons)).find(
-      (weapon) =>
-        game.computer[weaponToDeafeater[weapon]] > 0 && game.user[weapon] > 0
-    )
-  ];
+  // return weaponToDeafeater[
+  //   shuffle(Object.keys(icons)).find(
+  //     (weapon) =>
+  //       game.computer[weaponToDeafeater[weapon]] > 0 && game.user[weapon] > 0
+  //   )
+  // ];
+  return "scissors";
 }
 
 function getFormattedAmtForPlayer(player, choice) {
@@ -101,6 +103,8 @@ function setPlayerChoice(player, choice) {
 
 function battle() {
   // Computer choice get + display
+
+  console.log(game);
   const computerChoice = getComputerChoice();
   const computerChoiceBox = document.getElementById("computerChoice"); // the big one in the middle
   computerChoiceBox.innerHTML = icons[computerChoice];
@@ -108,10 +112,10 @@ function battle() {
     .getElementById(`computer${computerChoice}weaponbox`)
     .classList.add("chosen-one");
 
-  const winner = getWinner(computerChoice, game.user.selected.type);
-
   setPlayerChoice("computer", computerChoice);
-  setPlayerChoice("user", game.user.selected.type); // this "finalizes" the selection
+  setPlayerChoice("user", game.user.selected.tempType); // this "finalizes" the selection
+
+  const winner = getWinner(computerChoice, game.user.selected.type);
 
   if (winner != "nobody") {
     const loser = winner == "computer" ? "user" : "computer";
@@ -140,7 +144,9 @@ function addToLog(computerChoice, winner) {
     htmlToElement(`
             <div class="log-card">
                 <p>${roundCount}</p>
-                <center><h2>${winner} won +${icons[game[loser].selected.type]}</h2></center>
+                <center><h2>${winner} won +${
+      icons[game[loser].selected.type]
+    }</h2></center>
                 <div class="log-card-breakdown">
                     <div class="log-card-column">
                         <h1>${icons[computerChoice]}</h1>
@@ -166,7 +172,7 @@ function onWeaponClick(evt, type) {
     game.user.selected.elem.classList.remove("chosen-one");
   evt.currentTarget.classList.add("chosen-one");
   game.user.selected.elem = evt.currentTarget;
-  game.user.selected.type = type;
+  game.user.selected.tempType = type;
   const choiceBox = document.getElementById("userChoice");
   choiceBox.innerHTML = icons[type];
 

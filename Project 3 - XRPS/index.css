@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(17, 1, 15);
+  background-color: #11010f;
   color: lavender;
   font-family: sans-serif;
   overflow-x: hidden;
@@ -10,7 +10,7 @@ h1 {
 }
 
 code {
-  background-color: rgb(64, 18, 58);
+  background-color: #40123a;
   padding: 5px;
   border-radius: 3px;
 }
@@ -30,7 +30,7 @@ code {
   min-width: 15rem;
   min-height: 10rem;
   gap: 5px;
-  background-color: rgb(36, 32, 41);;
+  background-color: #382b3d;
 }
 .log-card p:first-of-type {
   text-align: right;
@@ -49,7 +49,7 @@ code {
 .computer-weapon,
 .choice {
   /* border: 2px solid rgba(230, 230, 250, 0.604); */
-  background-color: #1f101f;
+  background-color: #411b41;
   /* -webkit-box-shadow: 0px 0px 3px 3px rgba(255, 60, 0, 0.613), 0px 0px 6px 6px rgba(255, 60, 0, 0.418), 0px 0px 10px 10px rgba(255, 60, 0, 0.418);
   -moz-box-shadow: 0px 0px 3px 3px rgba(255, 60, 0, 0.613), 0px 0px 6px 6px rgba(255, 60, 0, 0.418), 0px 0px 10px 10px rgba(255, 60, 0, 0.418);
   box-shadow: 0px 0px 3px 3px rgba(255, 60, 0, 0.613), 0px 0px 6px 6px rgba(255, 60, 0, 0.418), 0px 0px 10px 10px rgba(255, 60, 0, 0.418); */
@@ -70,20 +70,17 @@ code {
 }
 .user-weapon:hover:not(.chosen-one) {
   cursor: pointer;
-  background-color: rgba(160, 27, 0, 0.76);
+  background-color: #4f1d4f;
 }
-.user-weapon:active {
-  background-color: rgba(160, 27, 0, 0.5);
+.user-weapon:active,
+.chosen-one {
+  background-color: #260e26;
 }
 .user-weapon span,
 .computer-weapon span {
   font-size: clamp(1rem, 1rem + 2vw, 2rem);
   text-align: right;
   width: 100%;
-}
-
-.chosen-one {
-  background-color: rgba(160, 27, 0, 0.5);
 }
 
 .container {
@@ -96,21 +93,21 @@ code {
   border-radius: 6px;
   padding: 10px;
   font-size: 25px;
-  background-color: rgba(230, 230, 250, 0.8);
-  color: rgb(17, 1, 15);
+  background-color: #e6e6facc;
+  color: #11010f;
 }
 
 #battle:hover:not(:disabled),
 .info-btn:hover {
   cursor: pointer;
-  background-color: rgba(230, 230, 250, 0.9);
+  background-color: #e6e6fae6;
 }
 #battle:active:not(:disabled) {
-  background-color: rgba(230, 230, 250, 1);
+  background-color: #e6e6fa;
 }
 #battle:disabled,
 .disabledChoice {
-  background-color: rgba(230, 230, 250, 0.3);
+  background-color: #e6e6fa4d;
   pointer-events: none;
 }
 
@@ -159,8 +156,7 @@ code {
 #log-cards {
   display: flex;
   flex-direction: row;
-  /* border: 2px solid rgba(230, 230, 250, 0.361); */
-  background-color: rgb(19, 14, 25);
+  background-color: #130e19;
   border-radius: 5px;
   padding: 1rem;
   min-height: 12rem;
@@ -170,8 +166,7 @@ code {
   white-space: nowrap;
 }
 #log-cards .log-card:first-of-type {
-  background-color: rgb(13, 1, 25);
-  border-color: rgb(27, 7, 48);
+  background-color: #483052;
 }
 
 .log-card-column {
@@ -182,7 +177,7 @@ code {
 
 .modal-container {
   z-index: 1;
-  background-color: rgba(17, 1, 15, 0.473);
+  background-color: #11010f79;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -193,7 +188,7 @@ code {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgb(17, 1, 15);
+  background-color: #11010f;
   padding: 1rem;
   width: 50%;
   height: 50%;
