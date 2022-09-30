@@ -161,8 +161,12 @@ function addToLog(computerChoice, winner) {
 
 function onWeaponClick(evt, type) {
   if (game.user[type] == 0) return;
+
   const battleButton = document.getElementById("battle");
   if (battleButton.innerHTML == "Next Round") return;
+
+  const winnerHeading = document.getElementById("winner");
+  winnerHeading.innerHTML = `BATTLE!`;
 
   if (game.user.selected.elem)
     game.user.selected.elem.classList.remove("chosen-one");
