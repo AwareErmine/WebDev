@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>Matching Game</title>
+        <title>To do list</title>
         <link rel="stylesheet" href="index.css">
         <script type="module" src="index.js"></script>
         <script type="module" src="utils.js"></script>
@@ -10,6 +10,13 @@
     <body>
         <nav><a href="https://en.wikipedia.org/wiki/Basic_Rocket_Science"><img src="assets/logo.jpg"><h1>Shop Lift Up</h1></a></nav>
         
-        <div id="list"></div>
+        <ul id="list">
+            <li>
+                <form onsubmit="window.addNew(event)" method="post">
+                    <input type="text" id="list-input" name="listInput" placeholder="Add new">
+                </form>
+            </li>
+            <div id="list-items"></div>
+        </ul>
     </body>
 </html>

@@ -24,3 +24,40 @@ nav img {
     border-radius: 50%;
 }
 
+.delete-btn {
+    background: darkred;
+    color: lavender;
+    border-radius: 5px;
+}
+
+#list {
+    padding: 1.5rem;
+}
+
+li {
+    margin: 10px;
+    align-items: center;
+}
+li div.items { /*put the delete button at the end*/
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+li div.items p {
+    width: 100%;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+li input[type="text"] {
+    background-color: lavenderblush;
+    color: #11010f;
+    border-radius: 5px;
+    padding: 0.5rem;
+    width: 100%;
+    outline: none;
+    border: none;
+}
+li input[type="text"]:focus, li input[type="text"]:active {
+    background-color: lavender;
+}
