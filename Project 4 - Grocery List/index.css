@@ -28,15 +28,24 @@ nav img {
     background: darkred;
     color: lavender;
     border-radius: 5px;
+    padding: 1ch;
+    border-width: 0;
+}
+.delete-btn:hover {
+    cursor: pointer;
+    background-color: rgba(139, 0, 0, 0.767);
 }
 
 #list {
-    padding: 1.5rem;
+    padding: 3rem;
 }
 
 li {
     margin: 10px;
     align-items: center;
+}
+li::marker:not(:first-of-type) {
+    display: none;
 }
 li div.items { /*put the delete button at the end*/
     display: flex;
@@ -45,19 +54,23 @@ li div.items { /*put the delete button at the end*/
     align-items: center;
 }
 li div.items p {
-    width: 100%;
-    padding: 5px;
+    flex: 1;
     white-space: pre-wrap;
+    margin: 1rem;
+}
+li div.items:hover {
+    cursor: pointer;
+    background-color: #170014;
 }
 li input[type="text"] {
-    background-color: lavenderblush;
-    color: #11010f;
+    background-color: #170014;
     border-radius: 5px;
-    padding: 0.5rem;
-    width: 100%;
+    padding: 1rem;
+    width: calc(100% - 1.5rem);
     outline: none;
     border: none;
+    color: white;
 }
 li input[type="text"]:focus, li input[type="text"]:active {
-    background-color: lavender;
+    background-color: #260121;
 }

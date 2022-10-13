@@ -1,5 +1,7 @@
 import { htmlToElement } from './utils.js';
 
+const deletedHistory = [];
+
 function onLiDrag(event) {
     event.dataTransfer.setData("dragged-id", event.target.id);
 }
@@ -15,6 +17,7 @@ function onLiDrop(event) {
 }
 
 function deleteElement(event) {
+    deletedHistory.push(event.target.parentNode.parentNode);
     event.target.parentNode.parentNode.remove();
 }
 
@@ -49,4 +52,11 @@ function onPageLoad(evt) {
     window.onLiDrop = onLiDrop;
 }
 
-document.addEventListener("DOMContentLoaded", onPageLoad)
+function undoDelete(event) {
+    if (event.ctrlKey && event.key === 'z' && deletedHistory.length) {
+        document.getElementById("list-items").appendChild(deletedHistory.pop());
+    }
+}
+
+document.addEventListener('keydown', undoDelete);
+document.addEventListener("DOMContentLoaded", onPageLoad);
