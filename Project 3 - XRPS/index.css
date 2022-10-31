@@ -90,6 +90,10 @@ code {
   padding: 0 2rem 0 2rem;
 }
 
+#winner {
+  text-align: center;
+}
+
 #battle,
 .info-btn {
   border: none;

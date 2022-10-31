@@ -1,5 +1,5 @@
 const icons = {
-  rocks: "🪨",
+  rocks: "🗿",
   papers: "📄",
   scissors: "✂️",
 };
@@ -29,6 +29,32 @@ const game = {
     },
   },
 };
+
+// const game = {
+//   user: {
+//     rocks: 1,
+//     papers: 1,
+//     scissors: 1,
+//     selected: {
+//       elem: null,
+//       type: null, // the last one stored
+//       tempType: null, // use as temp storage
+//       repeats: 0,
+//       broke: null, // null or the item that just broke
+//     },
+//   },
+//   computer: {
+//     rocks: 1,
+//     papers: 1,
+//     scissors: 1,
+//     selected: {
+//       elem: null,
+//       type: null,
+//       repeats: 0,
+//       broke: null,
+//     },
+//   },
+// };
 
 const weaponToDeafeater = {
   // weapon to what defeats it
@@ -68,6 +94,16 @@ function getWinner(computerChoice, userChoice) {
   else if (weaponToDeafeater[userChoice] == computerChoice) return "computer";
 
   return "everybody✨"; // when would this happen
+}
+
+function getFinalWinner() {
+  return Object.keys(icons).every((weapon) => game.computer[weaponToDeafeater[weapon]] >= 0 && game.user[weapon] == 0)
+    ? "computer"
+    : Object.keys(icons).every((weapon) => game.user[weaponToDeafeater[weapon]] >= 0 && game.computer[weapon] == 0)
+    ? "user"
+    : Object.keys(icons).every((weapon) => game.user[weapon] == 0 && game.computer[weapon] == 0)
+    ? "tie"
+    : false;
 }
 
 function getComputerChoice() {
@@ -167,7 +203,7 @@ function addToLog(computerChoice, winner) {
                   }</p>
                   <p>${
                     game.computer.selected.broke
-                      ? `One of the ${game.user.computer.broke} broke!`
+                      ? `One of the ${game.computer.selected.broke} broke!`
                       : ""
                   }</p>
                 </div>
@@ -262,6 +298,14 @@ function nextRound() {
   // Update prompt
   const winnerHeading = document.getElementById("winner");
   winnerHeading.innerHTML = `Select an item!`;
+
+  const finalWinner = getFinalWinner();
+  if (finalWinner) {
+    winnerHeading.innerHTML = `The ${finalWinner} has won at last! 🎉`
+    battleButton.disabled = true;
+    document.removeEventListener("keydown");
+    return;
+  }
 }
 
 function renderWeapons(id, player) {
