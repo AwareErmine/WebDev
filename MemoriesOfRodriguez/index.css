@@ -6,13 +6,14 @@ body {
 
 h1 {
     margin: 5rem 0;
-    font-size:3rem;
+    text-align: center;
+    width: 100%;
+    font-size: clamp(4rem, 1rem + 5vw, 5rem);
     text-shadow: 0 0 5px #FFFB, 0 0 10px #FFFA, 0 0 15px #FFF9, 0 0 20px #b34100, 0 0 30px #b34100, 0 0 40px #b34100, 0 0 55px #b34100, 0 0 75px #b34100;
 }
 
 .imageGrid {
-    padding: 0;
-    padding: 2rem;
+    padding: 0 max(1rem, 25%);
 }
 
 .imageGrid div {
@@ -22,7 +23,7 @@ h1 {
 
 .imageGrid img {
     border-radius: 10px;
-    height: 40vh
+    height: 50vh
 }
 
 .imageGrid div:nth-child(even) {
