@@ -1,0 +1,29 @@
+body {
+    background-color: rgb(17, 1, 15);
+    color: lavender;
+    font-family: sans-serif;
+}
+
+h1 {
+    /* background-color: red; */
+    margin: 5rem 0;
+}
+
+.imageGrid {
+    padding: 0;
+    padding: 2rem;
+}
+
+.imageGrid div {
+    display: flex;
+    margin-top: -2rem;
+}
+
+.imageGrid img {
+    border-radius: 10px;
+    height: 40vh
+}
+
+.imageGrid div:nth-child(even) {
+    justify-content: flex-end;
+}
