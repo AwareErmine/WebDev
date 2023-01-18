@@ -11,7 +11,7 @@ nav a {
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    background-color: #22021f;
+    background-color: #36012f;
     margin: 0;
     color: inherit;
     text-decoration: none;
@@ -28,15 +28,22 @@ nav img {
     color: lavender;
     border-radius: 5px;
     padding: 1ch;
+    margin-right: 1rem;
     border-width: 0;
+    display: none;
 }
 .delete-btn:hover {
     cursor: pointer;
     background-color: rgba(139, 0, 0, 0.767);
 }
+li:hover .delete-btn {
+    display: block;
+}
 
 #list {
     padding: 3rem;
+    margin-left: max(1rem, 20%);
+    margin-right: max(1rem, 20%);
 }
 
 li {
@@ -51,18 +58,20 @@ li div.items { /*put the delete button at the end*/
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    border-radius: 5px;
 }
 li div.items p {
     flex: 1;
     white-space: pre-wrap;
+    word-break: break-all;
     margin: 1rem;
 }
 li div.items:hover {
     cursor: pointer;
-    background-color: #170014;
+    background-color: #36012f;
 }
 li input[type="text"] {
-    background-color: #170014;
+    background-color: #36012f;
     border-radius: 5px;
     padding: 1rem;
     width: calc(100% - 1.5rem);
@@ -73,3 +82,30 @@ li input[type="text"] {
 li input[type="text"]:focus, li input[type="text"]:active {
     background-color: #260121;
 }
+
+.modal-container {
+    z-index: 1;
+    background-color: #11010f79;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+.modal {
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: lavender;
+    color: #260121;
+    padding: 1rem;
+    width: 80%;
+    border-radius: 3px;
+    box-shadow: 0px 0px 15px 3px rgba(255, 255, 255, 0.652), 0px 0px 5px lavender;
+  }
+  .modal video {
+    border-radius: 4px;
+  }
+  .hidden {
+    display: none;
+  }

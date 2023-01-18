@@ -9,15 +9,31 @@
         <script type="module" src="utils.js"></script>
     </head>
     <body>
+        <div
+            class="modal-container hidden"
+            id="info-modal"
+            onClick="event.currentTarget.classList.toggle('hidden')"
+        >
+            <div class="modal">
+                <center>
+                    <h2>This could be you getting groceries from Shop Lift Up™</h2>
+                    <video width="75%" height="75%"  controls>
+                        <source src="/assets/getting groceries.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </center>
+            </div>
+        </div>
+
         <nav><a href="https://en.wikipedia.org/wiki/Basic_Rocket_Science"><img src="assets/logo.png"><h1>Shop Lift Up</h1></a></nav>
-        
+
         <ul id="list">
             <li>
                 <form onsubmit="window.addNew(event)" method="post">
-                    <input type="text" id="list-input" name="listInput" placeholder="Add new">
+                    <input autocomplete="off" type="text" id="list-input" name="listInput" placeholder="Add new">
                 </form>
             </li>
-            <div id="list-items"></div>
+            <div id="list-items" style="display: flex; flex-direction: column-reverse;"></div>
         </ul>
     </body>
 </html>
