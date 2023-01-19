@@ -6,7 +6,7 @@ const audio = new Audio("http://freesoundeffect.net/sites/default/files/paper-cr
 function onLiDrop(event) {
     event.preventDefault();
     const dragged = document.getElementById(event.dataTransfer.getData("dragged-id"));
-    if (event.currentTarget.offsetTop < dragged.offsetTop) {
+    if (event.currentTarget.offsetTop > dragged.offsetTop) {
         event.currentTarget.parentNode.insertBefore(dragged, event.currentTarget);
     } else {
         event.currentTarget.after(dragged);
@@ -15,9 +15,14 @@ function onLiDrop(event) {
 
 function deleteElement(event) {
     audio.play();
-    deletedHistory.push(event.target.parentNode.innerHTML); // the list item whole
+    deletedHistory.push(event.target.parentNode.innerHTML); 
     event.target.parentNode.parentNode.remove();
     // console.log(deletedHistory);
+}
+
+function onDragOver(event) {
+    event.preventDefault();
+    // Add indicator
 }
 
 function addNew(event) {
@@ -31,7 +36,7 @@ function addNew(event) {
         <li 
             draggable="true" 
             ondragstart="window.onLiDrag(event)"
-            ondragover="event.preventDefault()"
+            ondragover="window.onDragOver(event)"
             ondrop="window.onLiDrop(event)"
             id=${Date.now()}
         >
@@ -63,6 +68,7 @@ function onPageLoad(evt) {
     window.deleteElement = deleteElement;
     window.onLiDrag = (evt) => evt.dataTransfer.setData("dragged-id", evt.target.id);
     window.onLiDrop = onLiDrop;
+    window.onDragOver = onDragOver;
 }
 
 function beforeUnload(evt) {
