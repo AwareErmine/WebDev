@@ -1,7 +1,7 @@
 import { htmlToElement } from './utils.js';
 
 var deletedHistory = [];
-const audio = new Audio("http://freesoundeffect.net/sites/default/files/paper-crumple-01-sound-effect-45574952.mp3");
+const audio = new Audio("assets/paper.mp3");
 
 function onLiDrop(event) {
     event.preventDefault();
